@@ -1,0 +1,8 @@
+[*]
+  charset = utf-8
+  indent_style = space
+  insert_final_newline = true
+  root = true
+
+[*.go]
+  indent_size = 4

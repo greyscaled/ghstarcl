@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.md": "prettier --print-width=80 --prose-wrap=always --write"
+  }
+}
