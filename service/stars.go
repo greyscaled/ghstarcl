@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type StarredRepo struct {
@@ -34,8 +35,10 @@ func GetRandGithubStars(username string) ([]StarredRepo, error) {
 	var stars []StarredRepo
 	var url string
 	if nPages == 1 {
+		// rand.Intn(1-1) will panic
 		url = makePagedGithubURL(username, 1)
 	} else {
+		rand.Seed(time.Now().UnixNano())
 		url = makePagedGithubURL(username, rand.Intn(nPages-1)+1)
 	}
 
@@ -71,9 +74,9 @@ func getNumberOfPages(res *http.Response) (int, error) {
 	re := regexp.MustCompile(`\?page=(\d+)>`)
 	matches := re.FindStringSubmatch(lastLink)
 	pagestr := matches[len(matches)-1]
-	pageint, err := strconv.ParseInt(pagestr, 10, 64)
+	pageint, err := strconv.Atoi(pagestr)
 	if err != nil {
 		return 0, err
 	}
-	return int(pageint), nil
+	return pageint, nil
 }
